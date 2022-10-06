@@ -1,0 +1,26 @@
+﻿@page "{id}"
+@model TopCourse.Web.Pages.Admin.Comments.DeleteCommentModel
+@{
+    ViewData["Title"] = "حذف نظر";
+    Layout = null;
+}
+
+<div class="container alert alert-danger">
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="commentId" asp-for="@Model.CourseComment.CommentId" />
+        <input type="hidden" name="courseId" asp-for="@Model.CourseComment.CourseId" />
+
+        <h4 style="text-align:center">آیا از حذف نظر @Model.CourseComment.User.UserName مطمئن هستید؟</h4>
+        <p style="text-align:center">
+
+            <input type="submit" value="حذف" class="btn btn-danger" />
+            <a asp-page="IndexComment" class="btn btn-info">انصراف</a>
+
+        </p>
+
+    }
+</div>

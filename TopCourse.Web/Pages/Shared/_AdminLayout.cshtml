@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>پنل مدیریت تاپ کورس</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="/AdminContent/css/bootstrap-rtl.css" rel="stylesheet">
+    <link href="/AdminContent/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Page-Level Plugin CSS - Dashboard -->
+    <link href="/AdminContent/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="/AdminContent/css/plugins/timeline/timeline.css" rel="stylesheet">
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link href="/AdminContent/css/sb-admin.css" rel="stylesheet">
+    <link href="~/admincontent/css/sweetalert.min.css" rel="stylesheet" />
+    <link href="~/AdminContent/css/CustomCss.css" rel="stylesheet">
+    <link rel="icon" href="~/images/favicon.png">
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/"><h2 style="margin:5px 55px">تاپ کورس</h2></a>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" id="searchMenu" class="form-control" placeholder="جستجو">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                    </ul>
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="/Admin"><i class="fa fa-user fa-fw"></i> پنل ادمین</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i> مدیریت کاربران<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/Admin/Roles/IndexRole">دسترسی ها</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/Users/IndexUser">کاربران</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/Users/ListDeleteUsers">کابران حذف شده</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-dedent fa-fw"></i> مدیریت دوره ها<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/Admin/Courses/IndexCourse"><span> </span>دوره ها</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/CourseGroups/IndexGroup"><span> </span>گروه ها</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/Discount/IndexDiscount"><span> </span>تخفیف ها</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+
+                        <li>
+                            <a href="/"><i class="fa fa-sign-out fa-fw"></i> خروج</a>
+                        </li>
+                    </ul>
+                    <!-- /#side-menu -->
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Core Scripts - Include with every page -->
+    <script src="/AdminContent/js/jquery-1.10.2.js"></script>
+    <script src="/AdminContent/js/bootstrap.min.js"></script>
+    <script src="/AdminContent/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <!-- Page-Level Plugin Scripts - Dashboard -->
+    <script src="/AdminContent/js/plugins/morris/raphael-2.1.0.min.js"></script>
+    <script src="/AdminContent/js/plugins/morris/morris.js"></script>
+
+    <!-- SB Admin Scripts - Include with every page -->
+    <script src="/AdminContent/js/sb-admin.js"></script>
+
+    <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
+    <script src="/AdminContent/js/demo/dashboard-demo.js"></script>
+
+
+    <script src="/js/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/sweetalert2.all.min.js"></script>
+    <!-- for filter Menu -->
+    <script>
+        $("#searchMenu").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#side-menu li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    </script>
+
+    @RenderSection("Scripts", false)
+
+
+
+</body>
+
+</html>

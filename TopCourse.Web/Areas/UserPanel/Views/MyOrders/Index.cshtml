@@ -1,0 +1,71 @@
+﻿@using TopCourse.Core.Convertors;
+@model IEnumerable<TopCourse.DataLayer.Entities.Order.Order>
+@{
+    ViewData["Title"] = "فاکتور";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">تاپ کورس</a></li>
+            <li class="breadcrumb-item active" aria-current="page">فاکتورها</li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="user-account">
+        <div class="row">
+            <partial name="_sidebar" />
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <section class="user-account-content">
+                    <header><h1>فاکتورهای شما</h1></header>
+                    <div class="inner form-layer">
+                        <table class="table table-striped table-bordered" style="text-align:center">
+
+                            <tr>
+                                <th style="text-align:center">شماره فاکتور</th>
+                                <th style="text-align:center">تاریخ</th>
+                                <th style="text-align:center">قیمت</th>
+                                <th style="text-align:center">پرداخت</th>
+                                <th style="text-align:center">دستورات</th>
+                            </tr>
+
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="vertical-align:middle">
+                                        @item.OrderId
+                                    </td>
+                                    <td style="vertical-align:middle">@item.CreateDate.ToShamsi()</td>
+                                    <td style="vertical-align:middle">@item.OrderSum</td>
+                                    <td style="vertical-align:middle">
+                                        @if (item.IsFinaly)
+                                        {
+                                            <span class="text-success">
+                                                @*<i class="glyphicon glyphicon-ok"></i>*@
+                                                پرداخت شده
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">
+                                                @*<i class="glyphicon glyphicon-remove"></i>*@
+                                                پرداخت نشده
+                                            </span>
+                                        }
+                                    </td>
+                                    <td style="vertical-align:middle">
+                                        <a class="btn btn-info" href="/UserPanel/MyOrders/ShowOrder/@item.OrderId">نمایش</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

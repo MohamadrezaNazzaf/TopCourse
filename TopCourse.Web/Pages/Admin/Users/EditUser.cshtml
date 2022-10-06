@@ -1,0 +1,113 @@
+﻿@page "{id}"
+@model TopCourse.Web.Pages.Admin.Users.EditUserModel
+@using TopCourse.DataLayer.Entities.User;
+@{
+    ViewData["Title"] = "ویرایش کاربر";
+    List<Role> Roles = ViewData["Roles"] as List<Role>;
+}
+
+<div class="row">
+    <div class="col-md-11">
+        <h3 class="page-header">ویرایش کاربر</h3>
+    </div>
+    <div class="col-md-1" style="margin-top:15px">
+        <a class="page-header btn btn-primary btn-outline" style="margin-right:-8px" href="/Admin/Users/IndexUser">بازگشت</a>
+    </div>
+</div>
+
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="EditUserViewModel.userId" />
+    <input type="hidden" asp-for="EditUserViewModel.AvatarName" />
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    اطلاعات کاربر
+                </div>
+                <div class="panel-body">
+                    <h4>نام کاربری: <span style="color:green">@Model.EditUserViewModel.UserName</span></h4>
+
+                    <h5>ایمیل</h5>
+                    <input type="email" asp-for="EditUserViewModel.Email" class="form-control" placeholder="ایمیل را وارد کنید">
+                    <h5>کلمه عبور</h5>
+                    <input type="text" asp-for="EditUserViewModel.Password" class="form-control" placeholder="کلمه عبور را وارد کنید">
+                    <p class="help-block">در صورت وارد کردن کلمه عبور، کلمه عبور کاربر تغییر خواهد کرد.</p>
+                </div>
+            </div>
+
+
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    وضعیت کاربر
+                </div>
+                <div class="panel-body">
+                    <div class="radio">
+                        <label for="IsActive">فعال</label>
+                        <input type="radio" name="isActive" value="True" @((Model.EditUserViewModel.IsActive ? "checked" : "")) />
+                        <br />
+                        <label for="IsActive">غیرفعال</label>
+                        <input type="radio" name="isActive" value="False" @((Model.EditUserViewModel.IsActive ? "" : "checked"))>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <p>
+                <input type="submit" value="ویرایش اطلاعات" class="btn btn-success btn-block" />
+            </p>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    تصویر پروفایل
+                </div>
+                <div class="panel-body">
+                    <img class="thumbnail" id="imgAvatar" src="/UserAvatar/@Model.EditUserViewModel.AvatarName" />
+
+                    <h5 style="margin:10px 0px 5px 0px">انتخاب تصویر</h5>
+                    <input type="file" asp-for="EditUserViewModel.UserAvatar" class="btn btn-info btn-block" id="imgInp" />
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    نقش های کاربر
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <!-- Nav tabs -->
+
+                    @foreach (var item in Roles)
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="SelectedRoles" value="@item.RoleId" @((Model.EditUserViewModel.UserRoles.Any(r => r == item.RoleId) ? "checked" : ""))>@item.RoleTitle
+                            </label>
+                        </div>
+                    }
+
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts
+{
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                imgAvatar.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+}

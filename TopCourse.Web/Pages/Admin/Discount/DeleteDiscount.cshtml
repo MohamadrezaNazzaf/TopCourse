@@ -1,0 +1,26 @@
+﻿@page "{id}"
+@model TopCourse.Web.Pages.Admin.Discount.DeleteDiscountModel
+
+@{
+    ViewData["Title"] = "حذف کد تخفیف";
+    Layout = null;
+}
+
+    <div class="container alert alert-danger">
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="discountId" asp-for="@Model.Discount.DiscountId" />
+            <h4 style="text-align:center">آیا از حذف کد تخفیف '@Model.Discount.DiscountCode' مطمئن هستید؟</h4>
+            <p style="text-align:center">
+
+
+                <input type="submit" value="حذف نقش" class="btn btn-danger" />
+                <a asp-page="IndexCourse" class="btn btn-info">انصراف</a>
+
+            </p>
+
+        }
+    </div>

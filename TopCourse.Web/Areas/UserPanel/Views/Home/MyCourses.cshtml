@@ -1,0 +1,69 @@
+﻿@using TopCourse.Core.Convertors;
+@using TopCourse.Core.DTOs.Course;
+@model ShowCourseViewModel
+@{
+    ViewData["Title"] = "دوره های من";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">تاپ کورس</a></li>
+            <li class="breadcrumb-item active" aria-current="page">دوره های من</li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="user-account">
+        <div class="row">
+            <partial name="_sidebar" />
+            <div class="col-md-9">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        دوره های خریداری شده
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+
+                        <table class="table table-striped table-bordered table-hover dataTable" id="courseTable" aria-describedby="dataTables-example_info">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">تصویر</th>
+
+                                    <th style="text-align:center">عنوان دوره</th>
+
+                                    <th style="text-align:center">نام مدرس</th>
+
+                                    <th style="text-align:center">تعداد جلسات</th>
+
+                                    <th style="text-align:center">وضعیت دوره</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Courses)
+                                {
+                                    <tr style="text-align:center">
+                                        <td style="width:50px;position:center; vertical-align:middle">
+                                            <img src="/course/thumb/@item.CourseImageName"  style="max-width:100px" />
+                                        </td>
+                                        <td style="position:center; vertical-align:middle;font-size:15px"><a href="/ShowCourse/@item.CourseId">@item.CourseTitle</a></td>
+                                        <td style="position:center; vertical-align:middle;font-size:15px">@item.User.UserName</td>
+                                        <td style="position:center; vertical-align:middle;font-size:15px">@item.CourseEpisodes.Count</td>
+                                        <td style="position:center; vertical-align:middle;font-size:15px">@item.CourseStatus.StatusTitle</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+﻿@model TopCourse.Core.DTOs.ChargeWalletViewModel
+
+@using TopCourse.Core.DTOs
+@using TopCourse.Core.Convertors
+@{
+    ViewData["Title"] = "کیف پول شما";
+    int balanceUserWallet = (int)ViewData["BalaneUserWallet"];
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">تاپ کورس</a></li>
+            <li class="breadcrumb-item active" aria-current="page">کیف پول شما </li>
+        </ul>
+    </nav>
+</div>
+<div class="container">
+    <div class="user-account">
+        <div class="row">
+            <partial name="_sidebar" />
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <section class="user-account-content">
+                    <header><h1>کیف پول شما</h1></header>
+                    <div class="inner form-layer">
+                        <form asp-action="Index" method="post">
+
+                            <div class="row">
+
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+
+                                    <ul>
+                                        <li> موجودی حساب : <span class="text-success">@(balanceUserWallet.ToString("#,0")) تومان</span></li>
+                                    </ul>
+                                    <br />
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="email-address"><i class="zmdi zmdi-money"></i></span>
+                                        <input type="number" class="form-control" asp-for="@Model.Amount" placeholder="مبلغ به تومان" aria-describedby="email-address">
+                                    </div>
+                                </div>
+                                <div class="text-danger" asp-validation-summary="All"></div>
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <button class="btn btn-success">شارژ کیف پول</button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr />
+                        @{
+                            List<WalletViewModel> list = ViewBag.ListWallet as List<WalletViewModel>;
+                        }
+                        <table class="table table-striped table-bordered" style="text-align:center">
+                            <tr>
+                                <th style="text-align:center">مبلغ</th>
+                                <th style="text-align:center">تاریخ</th>
+                                <th style="text-align:center">نوع تراکنش</th>
+                                <th style="text-align:center">شرح</th>
+                            </tr>
+                            @foreach (var item in list)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item.Type == 1)
+                                        {
+                                            <span style="vertical-align:middle" class="text-success">@item.Amount.ToString("#,0 تومان")</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="vertical-align:middle" class="text-danger">@item.Amount.ToString("#,0 تومان")</span>
+                                        }
+                                    </td>
+                                    <td style="vertical-align:middle">@item.DateTime.ToShamsi()</td>
+                                    <td style="vertical-align:middle">
+                                        @if (item.Type == 1)
+                                        {
+                                            <span class="text-success">واریز به حساب</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">برداشت از حساب</span>
+                                        }
+                                    </td>
+                                    <td style="vertical-align:middle">
+                                        @{
+
+                                            string tagHref = "<a href='/UserPanel/MyOrders/ShowOrder/" + item.Description.Replace("فاکتور شماره #", "") + "' >#</a>";
+                                        }
+                                        @Html.Raw(item.Description.Replace("#", tagHref))
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@page "{id}"
+@model TopCourse.Web.Pages.Admin.Users.RecoveryUserModel
+@{
+    ViewData["Title"] = "RecoveryUser";
+    Layout = null;
+}
+@using TopCourse.Core.Convertors;
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                ریکاوری حساب کاربری @Model.InformationUserViewModel.UserName
+            </div>
+            <div class="panel-body">
+
+
+                <input type="hidden" name="UserId" value="@ViewData["UserId"].ToString()" />
+
+                <dl class="dl-horizontal">
+                    <dt>نام کاربری : </dt>
+                    <dd>@Model.InformationUserViewModel.UserName</dd>
+                    <dt>ایمیل : </dt>
+                    <dd>@Model.InformationUserViewModel.Email</dd>
+                </dl>
+                <input type="submit" value="ریکاوری" class="btn btn-warning btn-block" />
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+}

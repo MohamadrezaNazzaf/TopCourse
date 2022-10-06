@@ -1,0 +1,64 @@
+﻿@page "{id}"
+@using TopCourse.Core.Convertors;
+@model TopCourse.Web.Pages.Admin.Comments.IndexModel
+@{
+    ViewData["Title"] = "نظرات";
+}
+
+    <div class="row">
+        <div class="col-md-11">
+            <h3 class="page-header">نظرات @ViewData["courseName"]</h3>
+        </div>
+        <div class="col-md-1" style="margin-top:15px">
+            <a class="page-header btn btn-primary btn-outline" style="margin-right:-8px" href="/Admin/Courses/IndexCourse">بازگشت</a>
+        </div>
+    </div>
+
+
+@foreach (var item in Model.CourseComments)
+{
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                @item.User.UserName
+            </div>
+            <div class="panel-body">
+                <p>@item.Comment</p>
+            </div>
+            <div class="panel-footer">
+                @item.CreateDate.ToShamsi()
+                <a onclick="deleteComment(@item.CommentId)" class="btn btn-danger btn-sm pull-left glyphicon glyphicon-trash" style="margin-top:-5px"></a>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:700px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align:center;font-size:24px">Modal title</h4>
+            </div>
+            <div class="modal-body" id="myModalBody"></div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="/js/modal.js"></script>
+    <script>
+
+
+        function deleteComment(id) {
+            $.get("/Admin/Comments/DeleteComment/" + id, function (result) {
+                $("#myModal").modal();
+                $("#myModalLabel").html("حذف گروه");
+                $("#myModalBody").html(result);
+            });
+        };
+    </script>
+}

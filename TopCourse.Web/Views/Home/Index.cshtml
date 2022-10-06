@@ -1,0 +1,118 @@
+﻿@using TopCourse.Core.DTOs.Course;
+@using TopCourse.Core.Services.Interfaces
+@model Tuple<List<TopCourse.Core.DTOs.Course.ShowCourseListItemViewModel>, int>
+@inject IOrderService _OrderService
+@{
+    ViewData["Title"] = "صفحه نخست";
+
+}
+
+
+@section UserInformation
+{
+
+    <div class="col-sm-6 col-xs-12">
+        <div class="clientarea">
+            @if (User.Identity.IsAuthenticated)
+            {
+
+            <div class="loggein">
+                <i class="zmdi zmdi-account"></i><a href="/UserPanel"> @User.Identity.Name</a>
+
+                <span>/</span>
+                <a href="/UserPanel" style="color:aqua;"> پروفایل </a>
+
+                @{var userRole = (int)ViewData["UserRole"];}
+                @if (userRole == 1 || userRole == 2)
+                {
+                    <span>/</span>
+                    <a href="/Admin" style="color:aqua;"> پنل مدیریت </a>
+                }
+
+                @if (_OrderService.IsExistOrderForUser(User.Identity.Name))
+                {
+
+                    var orderId = _OrderService.GetOrderIdOpenByUserName(User.Identity.Name);
+
+                    <span>/</span>
+                    <a href="/UserPanel/MyOrders/ShowOrder/@orderId" style="color:aqua;"> سبد خرید </a>
+                }
+
+                <span>/</span>
+                <a href="/Logout" style="color:aqua;"> خروج </a>
+
+
+            </div>
+            }
+            else
+            {
+                <div class="signin">
+                    <i class="zmdi zmdi-account"></i>
+                    <a href="/Login"> ورود </a> /
+                    <a href="/Register"> عضویت </a>
+                </div>
+            }
+
+        </div>
+    </div>
+
+}
+
+@section SearchBox
+{
+
+    <header>
+        <a href="/" class="logo"><img src="/images/logo.png" style="max-width:190px;margin-top:-30px"></a>
+        <div style="margin-top:-20px">
+            <h2> با اساتید مجرب و کارآزموده در خودآموز تاپ کورس </h2>
+            <p style="font-size:20px"> آموزش ببینید ، تجربه کسب کنید و وارد بازار کار شوید </p>
+            <p style="font-size:16px"> با کمترین هزینه خودت یاد بگیر</p>
+        </div>
+    </header>
+    <div class="search-form" style="margin-top:-30px">
+        <form action="/Course" method="get">
+            <input type="text" name="filter" style="border-radius: 25px" placeholder="چی دوست داری یاد بگیری؟">
+            <button style="border-radius: 25px;background-color:#2793d4;margin-left:2px"><i class="zmdi zmdi-search"></i></button>
+        </form>
+    </div>
+}
+
+<main id="home-page">
+    <div class="container">
+        <section class="terms-items">
+            <header>
+                <h2> آخرین دوره های تاپ کورس </h2>
+                <a href="/course"> مشاهده همه دوره ها </a>
+            </header>
+
+            <div class="row">
+                @foreach (var item in Model.Item1)
+                {
+                    <partial name="_BoxCourse" model="@item" />
+                }
+            </div>
+
+        </section>
+
+        <hr>
+
+        <section class="terms-items">
+            <header>
+                <h2> دوره های محبوب تاپ کورس </h2>
+                <a href="/course"> مشاهده همه دوره ها </a>
+            </header>
+            <div class="row">
+                @{
+                    List<ShowCourseListItemViewModel> popular = ViewBag.PopularCourse as List<ShowCourseListItemViewModel>;
+                }
+                @if (popular != null)
+                {
+                    @foreach (var item in popular)
+                    {
+                        <partial name="_BoxCourse" model="@item" />
+                    }
+                }
+            </div>
+        </section>
+    </div>
+</main>

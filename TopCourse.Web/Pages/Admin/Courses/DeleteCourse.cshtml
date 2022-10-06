@@ -1,0 +1,25 @@
+﻿@page "{id}/{pageId}"
+@model TopCourse.Web.Pages.Admin.Courses.DeleteCourseModel
+@{
+    ViewData["Title"] = "DeleteCourse";
+    Layout = null;
+}
+
+<div class="container alert alert-danger">
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="courseId" asp-for="@Model.Course.CourseId" />
+
+        <h4 style="text-align:center">آیا از حذف دوره '@Model.Course.CourseTitle' مطمئن هستید؟</h4>
+        <p style="text-align:center">
+
+            <a asp-page="IndexCourse" asp-route-pageId="@ViewData["pageId"]" class="btn btn-warning">انصراف</a>
+            <input type="submit" value="حذف دوره" class="btn btn-danger" />
+
+        </p>
+
+    }
+</div>

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html class="no-js" dir="rtl" lang="fa-IR">
+<head>
+    <meta charset="UTF-8">
+    <title> تاپ کورس | @ViewData["Title"] </title>
+    <partial name="_MetaTags" />
+    <partial name="_Styles" />
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+    <script src="/js/modernizr-custom.js"></script>
+
+    <div class="landing-layer">
+        <div class="container">
+            <nav>
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <ul>
+                            <li>
+                                <a href="/"> همکاری در فروش </a>
+                                <a href="/"> درباره ما </a>
+                                <a href="/"> تماس با ما </a>
+                            </li>
+                        </ul>
+                    </div>
+                    @RenderSection("UserInformation", false)
+                </div>
+            </nav>
+            @RenderSection("SearchBox", false)
+        </div>
+    </div>
+
+    <!-- main manu -->
+    @await Component.InvokeAsync("CourseGroupComponent")
+    <!-- /main manu -->
+    <!-- content -->
+    @RenderBody()
+    <!-- /content -->
+    <!-- footer -->
+    <partial name="_Footer" />
+    <!-- /footer -->
+
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/script.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="/js/jquery.validate.unobtrusive.js"></script>
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

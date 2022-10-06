@@ -1,0 +1,27 @@
+﻿@page "{id}"
+@model TopCourse.Web.Pages.Admin.CourseGroups.DeleteGroupModel
+@{
+    ViewData["Title"] = "حذف گروه";
+    Layout = null;
+}
+
+<div class="container alert alert-danger">
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="groupId" asp-for="@Model.CourseGroup.GroupId" />
+
+        <h4 style="text-align:center">آیا از حذف گروه '@Model.CourseGroup.GroupTitle' مطمئن هستید؟</h4>
+        <p style="text-align:center">
+
+
+            <input type="submit" value="حذف گروه" class="btn btn-danger" />
+            <a asp-page="IndexGroup" class="btn btn-info">انصراف</a>
+
+        </p>
+
+    }
+</div>
+

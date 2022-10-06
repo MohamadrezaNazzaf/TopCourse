@@ -1,0 +1,80 @@
+﻿@page "{id}"
+@model TopCourse.Web.Pages.Admin.Courses.CreateEpisodeModel
+@{
+    ViewData["Title"] = "جلسه جدید";
+}
+
+    <div class="row">
+        <div class="col-md-11">
+            <h3 class="page-header">افزودن جلسه جدید</h3>
+        </div>
+        <div class="col-md-1" style="margin-top:15px">
+            <a class="page-header btn btn-primary btn-outline" style="margin-right:-8px" href="/Admin/Courses/IndexEpisode/@Model.CourseEpisode.CourseId">بازگشت</a>
+        </div>
+    </div>
+
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden"asp-for="CourseEpisode.CourseId" />
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    اطلاعات جلسه
+                </div>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h5>عنوان جلسه</h5>
+                                <input type="text" asp-for="CourseEpisode.EpisodeTitle" class="form-control" placeholder="عنوان جلسه را وارد کنید">
+                                <span asp-validation-for="CourseEpisode.EpisodeTitle"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5>مدت زمان جلسه</h5>
+                                <input type="text" asp-for="CourseEpisode.EpisodeTime" class="form-control" placeholder="عنوان جلسه را وارد کنید">
+                                <span asp-validation-for="CourseEpisode.EpisodeTime"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>فایل</h5>
+                        <input type="file" name="fileEpisode" class="btn btn-outline btn-info" />
+                        <p class="text-warning">آپلود فایل اجباری است.</p>
+                        @if(ViewData["IsExistFile"]!=null)
+                        {
+                                <div class="alert alert-danger">
+                                    نام فایل معتبر نیست، لطفا تغییر دهید!
+                                </div>
+                        }
+                        <span asp-validation-for="CourseEpisode.EpisodeFileName"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>دسترسی</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" asp-for="CourseEpisode.IsFree" />
+                                رایگان است
+                            </label>
+                        </div>
+                    </div>
+
+                    <p>
+                        <input type="submit" value="افزودن" class="btn btn-success btn-block btn-circle" />
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

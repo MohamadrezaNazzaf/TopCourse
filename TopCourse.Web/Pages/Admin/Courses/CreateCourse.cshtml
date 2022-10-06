@@ -1,0 +1,173 @@
+﻿@page
+@model TopCourse.Web.Pages.Admin.Courses.CreateCourseModel
+@{
+    ViewData["Title"] = "افزودن دوره جدید";
+}
+
+
+<div class="row">
+    <div class="col-md-11">
+        <h3 class="page-header">افزودن دوره جدید</h3>
+    </div>
+    <div class="col-md-1" style="margin-top:15px">
+        <a class="page-header btn btn-primary btn-outline" style="margin-right:-8px" href="/Admin/Courses/IndexCourse">بازگشت</a>
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    اطلاعات دوره
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <h5>عنوان دوره</h5>
+                        <input type="text" asp-for="Course.CourseTitle" id="Title" class="form-control" placeholder="عنوان دوره را وارد کنید">
+                        <span asp-validation-for="Course.CourseTitle"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>گروه اصلی</h5>
+                        <select class="form-control" asp-for="Course.GroupId" asp-items="@ViewData["Groups"] as SelectList"></select>
+                        <span asp-validation-for="Course.GroupId"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>گروه فرعی</h5>
+                        <select class="form-control" asp-for="Course.SubGroup" asp-items="@ViewData["SubGroups"] as SelectList"></select>
+                        <span asp-validation-for="Course.SubGroup"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>مدرس دوره</h5>
+                        <select class="form-control" asp-for="Course.TeacherId" asp-items="@ViewData["Teachers"] as SelectList"></select>
+                        <span asp-validation-for="Course.TeacherId"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>شرح دوره</h5>
+                        <textarea class="form-control" asp-for="Course.CourseDescription" id="Description" rows="10"></textarea>
+                        <span asp-validation-for="Course.CourseDescription"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>قیمت دوره</h5>
+                        <input type="number" asp-for="Course.CoursePrice" value="0" class="form-control" />
+                        <span asp-validation-for="Course.CoursePrice"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h5>فایل دمو دوره</h5>
+                        <input type="file" name="demoUp" class="btn btn-outline btn-info" />
+                        <span asp-validation-for="Course.DemoFileName"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <h5>کلمات کلیدی دوره</h5>
+                        <input type="text" asp-for="Course.Tags" class="form-control">
+                        <p class="help-block">کلمات را با - جدا کنید</p>
+                        <span asp-validation-for="Course.Tags"></span>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <p>
+                <input type="submit" value="ذخیره اطلاعات" id="save" class="btn btn-success btn-block" />
+            </p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    تصویر پروفایل
+                </div>
+                <div class="panel-body">
+                    <img class="thumbnail" id="imgCourse" src="/UserAvatar/Default.jpg" />
+                    <h5 style="margin:10px 0px 5px 0px">انتخاب تصویر</h5>
+                    <input type="file" name="imgCourseUp" class="btn btn-info btn-block" id="imgInp" />
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    سطح دوره
+                </div>
+                <div class="panel panel-body">
+                    <select class="form-control" asp-for="Course.LevelId" asp-items="@ViewData["Levels"] as SelectList"></select>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    وضعیت دوره
+                </div>
+                <div class="panel panel-body">
+                    <select class="form-control" asp-for="Course.StatusId" asp-items="@ViewData["Statues"] as SelectList"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+    {
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        
+        $("#save").click(function () {
+            var title = $('#Title').val();
+            var description = $('#Description').val();
+          
+            if (title != '' && description != '') {
+                Swal.fire({
+                    icon: 'success',
+                    title: '<h4>دوره جدید با موفقیت افزوده شد.</h4>',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+            
+        });
+    </script>
+
+    <script>
+        $("#Course_GroupId").change(function () {
+            $("#Course_SubGroup").empty();
+            $.getJSON("/home/getsubgroups/" + $("#Course_GroupId :selected").val(),
+                function (data) {
+                    $.each(data,
+                        function () {
+                            $("#Course_SubGroup").append('<option value='
+                                + this.value + '>' + this.text + '</option>');
+                        });
+
+                });
+
+
+        });
+
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                imgCourse.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+    <script>
+
+        CKEDITOR.replace('Course_CourseDescription', {
+            customConfig: '/js/Config.js'
+        });
+
+    </script>
+
+}

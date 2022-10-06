@@ -1,0 +1,81 @@
+﻿@page "{id}"
+@using TopCourse.Core.Convertors
+@model TopCourse.Web.Pages.Admin.Discount.EditDiscountModel
+@{
+    ViewData["Title"] = "EditDiscount";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">ویرایش کد تخفیف </h3>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Discount.DiscountId" />
+    <div class="row">
+        <div class="col-md-7 col-md-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    کد تخفیف
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <h5>کد تخفیف </h5>
+                        <input type="text" asp-for="Discount.DiscountCode" class="form-control">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h5>درصد کد تخفیف </h5>
+                                <input type="number" asp-for="Discount.DiscountPercent" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h5>تعداد </h5>
+                                <input type="number" asp-for="Discount.UsableCount" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h5>تاریخ شروع </h5>
+                                <input id="stDate" name="stDate" value="@((Model.Discount.StartDate!=null)?Model.Discount.StartDate.Value.ToShamsi():"")" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <h5>تاریخ پایان </h5>
+                                <input id="edDate" name="edDate" value="@((Model.Discount.EndDate!=null)?Model.Discount.EndDate.Value.ToShamsi():"")" />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="ویرایش" class="btn btn-success btn-block" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    @*<link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.default.min.css" rel="stylesheet" />*@
+
+
+    <link href="~/AdminContent/css/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/AdminContent/css/kendo.default.min.css" rel="stylesheet" />
+    <script src="/js/kendo.all.min.js"></script>
+    <script>
+        // create DatePicker from input HTML element
+        $("#stDate").kendoDatePicker();
+        $("#edDate").kendoDatePicker();
+    </script>
+
+
+}

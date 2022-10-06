@@ -1,0 +1,26 @@
+﻿@page "{id}"
+@model TopCourse.Web.Pages.Admin.Roles.DeleteRoleModel
+@{
+    ViewData["Title"] = "حذف نقش";
+    Layout = null;
+}
+
+<div class="container alert alert-danger">
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="@Model.Role.RoleId" />
+            <input type="hidden" asp-for="@Model.Role.RoleTitle" />
+            <h4 style="text-align:center">آیا از حذف نقش '@Model.Role.RoleTitle' مطمئن هستید؟</h4>
+            <p style="text-align:center">
+
+
+                <input type="submit" value="حذف نقش" class="btn btn-danger" />
+                <a asp-page="IndexRole" class="btn btn-info">انصراف</a>
+
+            </p>
+      
+        }
+</div>

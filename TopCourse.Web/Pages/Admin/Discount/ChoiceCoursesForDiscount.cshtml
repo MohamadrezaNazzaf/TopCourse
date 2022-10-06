@@ -1,0 +1,84 @@
+﻿@page "{id}"
+@model TopCourse.Web.Pages.Admin.Discount.ChoiceCoursesForDiscountModel
+@using TopCourse.Core.DTOs.Course;
+@{
+    ViewData["Title"] = "ChoiceCoursesForDiscount";
+    List<ShowCourseForDiscount> Courses = ViewData["Courses"] as List<ShowCourseForDiscount>;
+}
+
+    <form method="post">
+        <div class="row">
+            <div class="col-md-9">
+                <h3 class="page-header">انتخاب دوره برای کد تخفیف ' @ViewData["CodeName"] '</h3>
+            </div>
+            <div class="col-md-2" style="margin-top:15px">
+                <input type="submit" value="اعمال" class="page-header btn btn-success btn-block btn-outline" style="margin-right:20px" />
+            </div>
+            <div class="col-md-1" style="margin-top:15px">
+                <a class="page-header btn btn-danger btn-block btn-outline" style="margin-right:0px" href="/Admin/Discount/IndexDiscount">بازگشت</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        دوره ها
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover dataTable no-footer" id="courseTable" aria-describedby="dataTables-example_info">
+                            <thead>
+                                <tr>
+                                    @* <th style="text-align:center"><a id="selectall" style="cursor:pointer">انتخاب همه</a></th>*@
+
+                                    <th style="text-align:center">
+                                        <input type="checkbox" id="selectAll" />
+                                    </th>
+
+                                    <th style="text-align:center">تصویر</th>
+
+                                    <th style="text-align:center">عنوان دوره</th>
+
+                                    <th style="text-align:center">نام مدرس</th>
+
+                                    <th style="text-align:center">وضعیت دوره</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Courses)
+                                {
+                                    <tr style="text-align:center">
+
+                                        <td style="position:center; vertical-align:middle;font-size:16px;width:65px"><input name="selectedCourse" id="checkboxes" type="checkbox" value="@item.CourseId" /></td>
+
+                                        <td style="width:50px;position:center; vertical-align:middle">
+                                            <img src="/course/thumb/@item.ImageName" class="thumbnail" style="max-width:100px" />
+                                        </td>
+                                        <td style="position:center; vertical-align:middle;font-size:16px">@item.Title</td>
+                                        <td style="position:center; vertical-align:middle;font-size:16px">@item.TeacherName</td>
+
+                                        <td style="position:center; vertical-align:middle;font-size:16px">@item.StatusTitle</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+@section scripts
+{
+    <script>
+        $('#selectAll').click(function (e) {
+            var table = $(e.target).closest('table');
+            $('td input:checkbox', table).prop('checked', this.checked);
+        });
+
+
+
+    </script>
+}
