@@ -1,2 +1,2 @@
 # TopCourse
-Asp.Net Core 2.2 - clean architecture
+Asp.Net Core 2.2 - n layer
